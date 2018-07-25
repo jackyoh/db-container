@@ -1,8 +1,6 @@
 package com.island.jdbc;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class DBConnection {
 
@@ -15,11 +13,16 @@ public class DBConnection {
 		Class.forName("org.postgresql.Driver");
 		
 		Connection connection = DriverManager.getConnection(
-				"jdbc:postgresql://192.168.1.8:5432", "postgres","");
+				"jdbc:postgresql://10.1.3.233:5432/postgres", "postgres","123456");
 		
-		DatabaseMetaData metaData = connection.getMetaData();
-		System.out.println(metaData.getDatabaseProductName());
-		
+		//DatabaseMetaData metaData = connection.getMetaData();
+		//System.out.println(metaData.getDatabaseProductName());
+
+		Statement statement = connection.createStatement();
+		ResultSet result = statement.executeQuery("select * from table1");
+		while(result.next()){
+			System.out.println(result.getString(1));
+		}
 		connection.close();
 	}
 }
